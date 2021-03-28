@@ -32,7 +32,7 @@ molecule:
           - debian9
           - debian10
           - "ubuntu20.04"
-      - MOLECULE_PLAYBOOK:
+        MOLECULE_PLAYBOOK:
           - converge
           - converge_dns-cf
   tags:
