@@ -1,7 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  tasks:
-    - name: "Include acmesh"
-      include_role:
-        name: "acmesh"
+  
+  roles:
+    - role: supsy.acmesh

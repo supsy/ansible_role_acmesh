@@ -5,7 +5,7 @@ ansible-lint:
   image: python:3-slim
   stage: test
   before_script:
-    - pip install ansible ansible-lint
+    - pip install ansible ansible-lint yamllint
     - ansible-lint --version
   script:
     - ansible-lint .
