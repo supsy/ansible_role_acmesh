@@ -3,4 +3,8 @@
   hosts: all
   
   roles:
-    - role: supsy.acmesh
+    - role: acmesh
+      vars:
+        acmesh__account_email: test@test.local
+        acmesh__use_staging: true
+        acmesh__enable_auto_issue: false

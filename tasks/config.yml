@@ -1,13 +1,13 @@
 ---
 # config file for roles/acmesh
 
-#Cron
+# Cron
 - name: config | Create an entry for https_proxy if defined
   cron:
     name: https_proxy
     env: yes
     job: "{{ acmesh__http_proxy }}"
-  when: acmesh__http_proxy != ''
+  when: acmesh__http_proxy
 
 - name: config | Create acme.sh cron
   cron:
@@ -16,13 +16,33 @@
     hour: "0"
     job: '"/opt/acme.sh"/acme.sh --cron --home "/opt/acme.sh" > /dev/null'
 
-#account.conf
+# account.conf
 - name: config | Validate config variable acmesh__account_email
   assert:
     that:
-      - acmesh__account_email != False
-      - acmesh__account_email != ""
+      - acmesh__account_email
     fail_msg: "acmesh__account_email invalid"
+
+- name: config | Validate validation method
+  assert:
+    that:
+      - acmesh__validation_method == "standalone" or acmesh__validation_method == "dns"
+    fail_msg: Validation method not supported!
+
+- name: config | Validate validation method DNS if enabled
+  assert:
+    that:
+      - acmesh__dns_provider == 'cf'
+    fail_msg: No supported dns provider enabled!
+  when: acmesh__validation_method == "dns"
+
+- name: config | Validate validation method DNS cf if enabled
+  assert:
+    that:
+      - acmesh__dns_cloudflare_email
+      - acmesh__dns_cloudflare_key
+    fail_msg: Required options for DNS provider cf missing!
+  when: acmesh__dns_provider == "cf"
 
 - name: config | Create account.conf config
   template:

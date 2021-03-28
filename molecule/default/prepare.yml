@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Install required packages for testing in docker
+      apt: 
+        name: [ 'cron' ]
+        state: present
+      when: ansible_os_family == 'Debian'

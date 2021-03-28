@@ -1,6 +1,12 @@
 ---
 # install file for roles/acmesh
 
+- name: install | Install acmesh and required packages for debian
+  apt: 
+    name: "{{ acmesh__packages }}"
+    state: present
+  when: ansible_os_family == 'Debian'
+
 - name: install | Git checkout Acme.sh
   git:
     repo: 'https://github.com/Neilpang/acme.sh.git'

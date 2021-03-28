@@ -18,7 +18,7 @@ galaxy_info:
         - focal
 
 
-  galaxy_tags: 
+  galaxy_tags:
     - acmesh
     - acme
     - letsencrypt

@@ -1,12 +1,15 @@
 ---
 # defaults file for roles/acmesh
 
-acmesh__show_ansible_management: False
+acmesh__show_ansible_management: false
 acmesh__package_version: master
-acmesh__http_proxy: False
+acmesh__http_proxy: ""
 
-acmesh__account_email: False
+acmesh__account_email: ""
+acmesh__use_staging: false
+acmesh__validation_method: standalone
+acmesh__enable_auto_issue: true
 
-acmesh__enable_dns_cloudflare: False
-acmesh__dns_cloudflare_email: False
-acmesh__dns_cloudflare_key: False
+acmesh__dns_provider: ""
+acmesh__dns_cloudflare_email: ""
+acmesh__dns_cloudflare_key: ""

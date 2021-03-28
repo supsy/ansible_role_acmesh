@@ -1,0 +1,12 @@
+---
+file:
+  /opt/acme.sh:
+    exists: true
+    owner: root
+    group: root
+  /opt/acme.sh/account.conf:
+    exists: true
+    owner: root
+    group: root
+    contains:
+      - /^ACCOUNT_EMAIL='test@test.local'$/

@@ -1,0 +1,27 @@
+---
+
+- name: issue | Issue Server FQDN Cert
+  command:
+    cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --issue -d {{ ansible_fqdn }} --{{ acmesh__validation_method }} {{ acmesh__dns_provider }} {{ '--staging' if acmesh__use_staging }}"
+    creates: "/opt/acme.sh/{{ ansible_fqdn }}/{{ ansible_fqdn }}.cer"
+
+- name: issue | Install Server FQDN Cert to default path
+  command:
+    cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --install-cert -d {{ ansible_fqdn }} --fullchain-file /etc/ssl/certs/{{ ansible_fqdn }}.cer --key-file /etc/ssl/private/{{ ansible_fqdn }}.key"
+    creates: "/etc/ssl/certs/{{ ansible_fqdn }}.cer"
+
+- name: issue | Ensure Server FQDN Key permissions
+  file:
+    path: "/etc/ssl/private/{{ ansible_fqdn }}.key"
+    owner: 'root'
+    group: 'ssl-cert'
+    mode: 0640
+
+- name: issue | Ensure CA file
+  copy:
+    src: "/opt/acme.sh/{{ ansible_fqdn }}/ca.cer"
+    dest: /etc/ssl/certs/ca.crt
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '0644'

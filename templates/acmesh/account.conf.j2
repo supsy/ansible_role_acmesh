@@ -5,7 +5,7 @@ ACCOUNT_EMAIL='{{ acmesh__account_email }}'
 #dns api
 #######################
 
-{% if acmesh__enable_dns_cloudflare -%}
+{% if acmesh__dns_provider == 'cf' -%}
 #Cloudflare:
 #api key
 CF_Key='{{ acmesh__dns_cloudflare_key }}'

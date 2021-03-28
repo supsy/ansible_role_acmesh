@@ -1,2 +1,7 @@
 ---
 # vars file for roles/acmesh
+
+acmesh__packages:
+  - git
+  - wget
+  - socat
