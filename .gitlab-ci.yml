@@ -20,5 +20,14 @@ molecule:
   stage: test
   script:
     - molecule test
+  parallel:
+    matrix:
+      - OS_DISTRIBUTION: debian
+        OS_VERSION:
+          - 9
+          - 10
+      - OS_DISTRIBUTION: ubuntu
+        OS_VERSION:
+          - 20.04
   tags:
     - docker
