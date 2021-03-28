@@ -28,6 +28,6 @@ molecule:
           - 10
       - OS_DISTRIBUTION: ubuntu
         OS_VERSION:
-          - 20.04
+          - "20.04"
   tags:
     - docker
