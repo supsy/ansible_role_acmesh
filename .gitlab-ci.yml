@@ -22,12 +22,9 @@ molecule:
     - molecule test
   parallel:
     matrix:
-      - OS_DISTRIBUTION: debian
-        OS_VERSION:
-          - 9
-          - 10
-      - OS_DISTRIBUTION: ubuntu
-        OS_VERSION:
-          - "20.04"
+      - MOLECULE_OS: 
+          - debian9
+          - debian10
+          - "ubuntu20.04"
   tags:
     - docker
