@@ -18,6 +18,10 @@ molecule:
     DOCKER_HOST: "tcp://docker:2375"
     PY_COLORS: 1
   stage: test
+  before_script:
+    - cd ..
+    - mv role_acmesh supsy.acmesh
+    - cd supsy.acmesh
   script:
     - molecule test
   parallel:
