@@ -17,11 +17,8 @@ molecule:
   variables:
     DOCKER_HOST: "tcp://docker:2375"
     PY_COLORS: 1
+    GIT_CLONE_PATH: $CI_BUILDS_DIR/acmesh
   stage: test
-  before_script:
-    - cd ..
-    - mv role_acmesh supsy.acmesh
-    - cd supsy.acmesh
   script:
     - molecule test
   parallel:
