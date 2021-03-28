@@ -1,0 +1,8 @@
+---
+# install file for roles/acmesh
+
+- name: install | Git checkout Acme.sh
+  git:
+    repo: 'https://github.com/Neilpang/acme.sh.git'
+    dest: /opt/acme.sh
+    version: "{{ acmesh__package_version }}"

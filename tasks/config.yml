@@ -1,0 +1,50 @@
+---
+# config file for roles/acmesh
+
+#Cron
+- name: config | Create an entry for https_proxy if defined
+  cron:
+    name: https_proxy
+    env: yes
+    job: "{{ acmesh__http_proxy }}"
+  when: acmesh__http_proxy != ''
+
+- name: config | Create acme.sh cron
+  cron:
+    name: "acme.sh"
+    minute: "40"
+    hour: "0"
+    job: '"/opt/acme.sh"/acme.sh --cron --home "/opt/acme.sh" > /dev/null'
+
+#account.conf
+- name: config | Validate config variable acmesh__account_email
+  assert:
+    that:
+      - acmesh__account_email != False
+      - acmesh__account_email != ""
+    fail_msg: "acmesh__account_email invalid"
+
+- name: config | Create account.conf config
+  template:
+    src: acmesh/account.conf.j2
+    dest: /opt/acme.sh/account.conf
+    owner: 'root'
+    group: 'root'
+    mode: 0600
+
+#acme.sh.env
+- name: config | Create acme.sh.env config
+  template:
+    src: acmesh/acme.sh.env.j2
+    dest: /opt/acme.sh/acme.sh.env
+    owner: 'root'
+    group: 'root'
+    mode: 0660
+
+#bashrc_root_acme
+- name: config | Update /root/.bashrc to include acme.sh.env
+  lineinfile:
+    dest: /root/.bashrc
+    regexp: '^\. "/opt/acme.sh/acme\.sh\.env"'
+    line: '. "/opt/acme.sh/acme.sh.env"'
+    state: present

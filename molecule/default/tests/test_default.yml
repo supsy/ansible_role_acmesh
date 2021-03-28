@@ -1,0 +1,6 @@
+---
+file:
+  /opt/acme.sh:
+    exists: true
+    owner: root
+    group: root

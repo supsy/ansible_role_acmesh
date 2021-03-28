@@ -1,0 +1,14 @@
+{{ '# FILE MANAGED BY ANSIBLE' if acmesh__show_ansible_management -}}
+
+ACCOUNT_EMAIL='{{ acmesh__account_email }}'
+
+#dns api
+#######################
+
+{% if acmesh__enable_dns_cloudflare -%}
+#Cloudflare:
+#api key
+CF_Key='{{ acmesh__dns_cloudflare_key }}'
+#account email
+CF_Email='{{ acmesh__dns_cloudflare_email }}'
+{% endif %}
