@@ -4,7 +4,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance
+  - name: "${MOLECULE_OS}"
     image: "supsy/molecule-systemd:${MOLECULE_OS}"
     pre_build_image: true
     capabilities:
