@@ -1,5 +1,6 @@
 galaxy_info:
   author: supsy
+  role_name: acmesh
   description: Installation for acme.sh
 
   issue_tracker_url: https://gitlab.com/supsy/ansible/role_acmesh
