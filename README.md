@@ -15,7 +15,7 @@ Available variables are listed below, along with default values (see `defaults/m
 | `acmesh__account_email`            | ''                   | Specify the e-mail address for letsencrypt registration and notifications. |
 | `acmesh__http_proxy`               | ''                   | Set http proxy, if needed. |
 | `acmesh__package_version`          | `*OS default*`       | Version/Branch for acmesh to install. |
-| `acmesh__validation_method`        | standalone           | Specify certificate validation method. (standalone|dns) |
+| `acmesh__validation_method`        | standalone           | Specify certificate validation method. (standalone/dns) |
 | `acmesh__enable_auto_issue`        | `true`               | Enable to automatically issue new certificate for hostname. |
 | `acmesh__use_staging`              | `false`              | Enable to use letsencrypt staging API. |
 | `acmesh__dns_provider`             | ''                   | Set DNS provider API. See `Supported DNS provider` below. |
