@@ -2,13 +2,15 @@
 
 ACCOUNT_EMAIL='{{ acmesh__account_email }}'
 
+USER_PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
 #dns api
 #######################
 
-{% if acmesh__dns_provider == 'cf' -%}
+{% if acmesh__dns_provider == 'dns_cf' -%}
 #Cloudflare:
 #api key
-CF_Key='{{ acmesh__dns_cloudflare_key }}'
+SAVED_CF_Key='{{ acmesh__dns_cloudflare_key }}'
 #account email
-CF_Email='{{ acmesh__dns_cloudflare_email }}'
+SAVED_CF_Email='{{ acmesh__dns_cloudflare_email }}'
 {% endif %}

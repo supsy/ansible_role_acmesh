@@ -9,6 +9,6 @@
         acmesh__use_staging: true
         acmesh__enable_auto_issue: false
         acmesh__validation_method: dns
-        acmesh__dns_provider: cf
+        acmesh__dns_provider: dns_cf
         acmesh__dns_cloudflare_email: test@test.local
         acmesh__dns_cloudflare_key: 12345

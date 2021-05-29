@@ -32,7 +32,7 @@
 - name: config | Validate validation method DNS if enabled
   assert:
     that:
-      - acmesh__dns_provider == 'cf'
+      - acmesh__dns_provider == 'dns_cf'
     fail_msg: No supported dns provider enabled!
   when: acmesh__validation_method == "dns"
 
@@ -42,7 +42,7 @@
       - acmesh__dns_cloudflare_email
       - acmesh__dns_cloudflare_key
     fail_msg: Required options for DNS provider cf missing!
-  when: acmesh__dns_provider == "cf"
+  when: acmesh__dns_provider == "dns_cf"
 
 - name: config | Create account.conf config
   template:

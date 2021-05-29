@@ -10,5 +10,5 @@ file:
     group: root
     contains:
       - /^ACCOUNT_EMAIL='test@test.local'$/
-      - /^CF_Key='12345'$/
-      - /^CF_Email='test@test.local'$/
+      - /^SAVED_CF_Key='12345'$/
+      - /^SAVED_CF_Email='test@test.local'$/

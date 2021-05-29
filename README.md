@@ -17,17 +17,27 @@ Available variables are listed below, along with default values (see `defaults/m
 | `acmesh__package_version`          | `*OS default*`       | Version/Branch for acmesh to install. |
 | `acmesh__validation_method`        | standalone           | Specify certificate validation method. (standalone/dns) |
 | `acmesh__enable_auto_issue`        | `true`               | Enable to automatically issue new certificate for hostname. |
+| `acmesh__issue_certificates`       | `see below`          | List of certificates, if automatically issue `acmesh__enable_auto_issue` is enabled. |
 | `acmesh__use_staging`              | `false`              | Enable to use letsencrypt staging API. |
 | `acmesh__dns_provider`             | ''                   | Set DNS provider API. See `Supported DNS provider` below. |
 | `acmesh__dns_cloudflare_email`     | ''                   | Set e-mail address for Cloudflare DNS API authentication. |
 | `acmesh__dns_cloudflare_key`       | ''                   | Set key for Cloudflare DNS API authentication. |
 
+### acmesh__issue_certificates Parameter
+
+| Name                  | Default Value       | Description                    |
+|-----------------------|---------------------|--------------------------------|
+| `name`                | ''                  | Set common name for certificate. |
+| `alternative_names`   | []                  | List of alternative names. |
+
+#### Default
+  - name: "{{ ansible_fqdn }}"
 
 ### Supported DNS provider
 
 | Value     | Description   |
 |-----------|---------------|
-| `cf`      | Cloudflare    |
+| `dns_cf`  | Cloudflare    |
 
 
 Dependencies
