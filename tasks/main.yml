@@ -30,3 +30,6 @@
 - name: Include task issue
   include_tasks: issue.yml
   when: acmesh__enable_auto_issue
+  loop: "{{ acmesh__issue_certificates }}"
+  loop_control:
+    loop_var: certificate

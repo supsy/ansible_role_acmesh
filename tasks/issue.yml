@@ -1,25 +1,25 @@
 ---
 
-- name: issue | Issue Server FQDN Cert
+- name: issue | Issue Certificate {{ certificate.name }}
   command:
-    cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --issue -d {{ ansible_fqdn }} --{{ acmesh__validation_method }} {{ acmesh__dns_provider }} {{ '--staging' if acmesh__use_staging }}"
-    creates: "/opt/acme.sh/{{ ansible_fqdn }}/{{ ansible_fqdn }}.cer"
+    cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --issue -d {{ certificate.name }} {{ '-d ' ~ certificate.alternate_names | join(' -d ') if 'alternate_names' in certificate }} --{{ acmesh__validation_method }} {{ acmesh__dns_provider }} {{ '--staging' if acmesh__use_staging }}"
+    creates: "/opt/acme.sh/{{ certificate.name }}/{{ certificate.name }}.cer"
 
-- name: issue | Install Server FQDN Cert to default path
+- name: issue | Install Certificate {{ certificate.name }} to default path
   command:
-    cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --install-cert -d {{ ansible_fqdn }} --fullchain-file /etc/ssl/certs/{{ ansible_fqdn }}.cer --key-file /etc/ssl/private/{{ ansible_fqdn }}.key"
-    creates: "/etc/ssl/certs/{{ ansible_fqdn }}.cer"
+    cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --install-cert -d {{ certificate.name }} --fullchain-file /etc/ssl/certs/{{ certificate.name }}.cer --key-file /etc/ssl/private/{{ certificate.name }}.key"
+    creates: "/etc/ssl/certs/{{ certificate.name }}.cer"
 
-- name: issue | Ensure Server FQDN Key permissions
+- name: issue | Ensure Certificate {{ certificate.name }} Key permissions
   file:
-    path: "/etc/ssl/private/{{ ansible_fqdn }}.key"
+    path: "/etc/ssl/private/{{ certificate.name }}.key"
     owner: 'root'
     group: 'ssl-cert'
     mode: 0640
 
 - name: issue | Ensure CA file
   copy:
-    src: "/opt/acme.sh/{{ ansible_fqdn }}/ca.cer"
+    src: "/opt/acme.sh/{{ certificate.name }}/ca.cer"
     dest: /etc/ssl/certs/ca.crt
     remote_src: yes
     owner: root

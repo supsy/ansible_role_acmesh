@@ -8,7 +8,10 @@ acmesh__http_proxy: ""
 acmesh__account_email: ""
 acmesh__use_staging: false
 acmesh__validation_method: standalone
+
 acmesh__enable_auto_issue: true
+acmesh__issue_certificates:
+  - name: "{{ ansible_fqdn }}"
 
 acmesh__dns_provider: ""
 acmesh__dns_cloudflare_email: ""
