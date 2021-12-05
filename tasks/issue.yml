@@ -2,7 +2,7 @@
 
 - name: issue | Issue Certificate {{ certificate.name }}
   command:
-    cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --issue -d {{ certificate.name }} {{ '-d ' ~ certificate.alternate_names | join(' -d ') if 'alternate_names' in certificate }} --{{ acmesh__validation_method }} {{ acmesh__dns_provider }} {{ '--staging' if acmesh__use_staging }}"
+    cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --issue -d {{ certificate.name }} {{ '-d ' ~ certificate.alternate_names | join(' -d ') if 'alternate_names' in certificate }} --{{ acmesh__validation_method }} {{ acmesh__dns_provider }} {{ '--staging' if acmesh__use_staging }} {{ '--server ' ~ certificate.server if 'server' in certificate }}"
     creates: "/opt/acme.sh/{{ certificate.name }}/{{ certificate.name }}.cer"
 
 - name: issue | Install Certificate {{ certificate.name }} to default path
