@@ -29,6 +29,7 @@ Available variables are listed below, along with default values (see `defaults/m
 |-----------------------|---------------------|--------------------------------|
 | `name`                | ''                  | Set common name for certificate. |
 | `alternative_names`   | []                  | List of alternative names. |
+| `server`              | `omit`              | Set ca server for certificate. (optional) |
 
 #### Default
   - name: "{{ ansible_fqdn }}"
