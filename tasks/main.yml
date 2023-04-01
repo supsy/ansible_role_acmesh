@@ -2,19 +2,19 @@
 # tasks file for roles/acmesh
 
 - name: Include meta vars
-  include_vars:
+  ansible.builtin.include_vars:
     file: meta/main.yml
     name: meta
 
 - name: Verify OS compatibility
-  assert:
+  ansible.builtin.assert:
     that:
       - ansible_distribution_release in (meta.galaxy_info.platforms | selectattr('name', 'search', ansible_distribution) | first).versions
     success_msg: "{{ ansible_distribution }} {{ ansible_distribution_release }} ({{ ansible_os_family }})"
     fail_msg: "{{ ansible_distribution }} {{ ansible_distribution_release }} ({{ ansible_os_family }}) not supported by Role!"
 
 - name: Add the OS specific variables
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item }}"
   when: lookup('fileglob', "vars/" ~ item, wantlist=True, errors='ignore') | length > 0
   loop:
@@ -22,13 +22,13 @@
     - "{{ ansible_distribution }}/{{ ansible_distribution_release }}.yml"
 
 - name: Include task install
-  include_tasks: install.yml
+  ansible.builtin.include_tasks: install.yml
 
 - name: Include task config
-  include_tasks: config.yml
+  ansible.builtin.include_tasks: config.yml
 
 - name: Include task issue
-  include_tasks: issue.yml
+  ansible.builtin.include_tasks: issue.yml
   when: acmesh__enable_auto_issue
   loop: "{{ acmesh__issue_certificates }}"
   loop_control:

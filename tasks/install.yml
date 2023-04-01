@@ -2,13 +2,13 @@
 # install file for roles/acmesh
 
 - name: install | Install acmesh and required packages for debian
-  apt: 
+  ansible.builtin.apt: 
     name: "{{ acmesh__packages }}"
     state: present
   when: ansible_os_family == 'Debian'
 
 - name: install | Git checkout Acme.sh
-  git:
+  ansible.builtin.git:
     repo: 'https://github.com/Neilpang/acme.sh.git'
     dest: /opt/acme.sh
     version: "{{ acmesh__package_version }}"

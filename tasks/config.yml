@@ -3,14 +3,14 @@
 
 # Cron
 - name: config | Create an entry for https_proxy if defined
-  cron:
+  ansible.builtin.cron:
     name: https_proxy
     env: yes
     job: "{{ acmesh__http_proxy }}"
   when: acmesh__http_proxy
 
 - name: config | Create acme.sh cron
-  cron:
+  ansible.builtin.cron:
     name: "acme.sh"
     minute: "40"
     hour: "0"
@@ -18,26 +18,26 @@
 
 # account.conf
 - name: config | Validate config variable acmesh__account_email
-  assert:
+  ansible.builtin.assert:
     that:
       - acmesh__account_email
     fail_msg: "acmesh__account_email invalid"
 
 - name: config | Validate validation method
-  assert:
+  ansible.builtin.assert:
     that:
       - acmesh__validation_method == "standalone" or acmesh__validation_method == "dns"
     fail_msg: Validation method not supported!
 
 - name: config | Validate validation method DNS if enabled
-  assert:
+  ansible.builtin.assert:
     that:
       - acmesh__dns_provider == 'dns_cf'
     fail_msg: No supported dns provider enabled!
   when: acmesh__validation_method == "dns"
 
 - name: config | Validate validation method DNS cf if enabled
-  assert:
+  ansible.builtin.assert:
     that:
       - acmesh__dns_cloudflare_email
       - acmesh__dns_cloudflare_key
@@ -45,7 +45,7 @@
   when: acmesh__dns_provider == "dns_cf"
 
 - name: config | Create account.conf config
-  template:
+  ansible.builtin.template:
     src: acmesh/account.conf.j2
     dest: /opt/acme.sh/account.conf
     owner: 'root'
@@ -54,7 +54,7 @@
 
 #acme.sh.env
 - name: config | Create acme.sh.env config
-  template:
+  ansible.builtin.template:
     src: acmesh/acme.sh.env.j2
     dest: /opt/acme.sh/acme.sh.env
     owner: 'root'
@@ -63,7 +63,7 @@
 
 #bashrc_root_acme
 - name: config | Update /root/.bashrc to include acme.sh.env
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /root/.bashrc
     regexp: '^\. "/opt/acme.sh/acme\.sh\.env"'
     line: '. "/opt/acme.sh/acme.sh.env"'

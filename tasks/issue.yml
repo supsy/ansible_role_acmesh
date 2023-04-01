@@ -1,27 +1,45 @@
 ---
 
 - name: issue | Issue Certificate {{ certificate.name }}
-  command:
+  ansible.builtin.command:
     cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --issue -d {{ certificate.name }} {{ '-d ' ~ certificate.alternate_names | join(' -d ') if 'alternate_names' in certificate }} --{{ acmesh__validation_method }} {{ acmesh__dns_provider }} {{ '--staging' if acmesh__use_staging }} {{ '--server ' ~ certificate.server if 'server' in certificate }}"
     creates: "/opt/acme.sh/{{ certificate.name }}/{{ certificate.name }}.cer"
 
-- name: issue | Install Certificate {{ certificate.name }} to default path
-  command:
+- name: issue | Install Certificate to default path - {{ certificate.name }}
+  ansible.builtin.command:
     cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --install-cert -d {{ certificate.name }} --fullchain-file /etc/ssl/certs/{{ certificate.name }}.cer --key-file /etc/ssl/private/{{ certificate.name }}.key"
     creates: "/etc/ssl/certs/{{ certificate.name }}.cer"
 
-- name: issue | Ensure Certificate {{ certificate.name }} Key permissions
-  file:
+- name: issue | Ensure Certificate Key permissions - {{ certificate.name }}
+  ansible.builtin.file:
     path: "/etc/ssl/private/{{ certificate.name }}.key"
     owner: 'root'
     group: 'ssl-cert'
     mode: 0640
 
 - name: issue | Ensure CA file
-  copy:
+  ansible.builtin.copy:
     src: "/opt/acme.sh/{{ certificate.name }}/ca.cer"
     dest: /etc/ssl/certs/ca.crt
     remote_src: yes
     owner: root
     group: root
     mode: '0644'
+
+- name: issue | Ensure /etc/haproxy/ssl/
+  ansible.builtin.file:
+    path: /etc/haproxy/ssl/
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
+  when: acmesh__enable_haproxy_deploy_hook
+
+- name: issue | Deploy Certificate to haproxy - {{ certificate.name }} 
+  ansible.builtin.command:
+    cmd: "/opt/acme.sh/acme.sh --home \"/opt/acme.sh\" --deploy -d {{ certificate.name }} --deploy-hook haproxy"
+    creates: "{{ acmesh__haproxy_deploy_hook_pem_path }}/{{ certificate.name }}.pem"
+  environment:
+     DEPLOY_HAPROXY_PEM_PATH: "{{ acmesh__haproxy_deploy_hook_pem_path }}"
+     DEPLOY_HAPROXY_RELOAD: "{{ acmesh__haproxy_deploy_reload_command }}"
+  when: acmesh__enable_haproxy_deploy_hook
