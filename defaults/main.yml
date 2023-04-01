@@ -7,6 +7,7 @@ acmesh__http_proxy: ""
 
 acmesh__account_email: ""
 acmesh__use_staging: false
+acmesh__default_acme_server: ""
 acmesh__validation_method: standalone
 
 acmesh__enable_auto_issue: true
@@ -16,3 +17,7 @@ acmesh__issue_certificates:
 acmesh__dns_provider: ""
 acmesh__dns_cloudflare_email: ""
 acmesh__dns_cloudflare_key: ""
+
+acmesh__enable_haproxy_deploy_hook: false
+acmesh__haproxy_deploy_hook_pem_path: /etc/haproxy/ssl
+acmesh__haproxy_deploy_reload_command: /usr/sbin/service haproxy reload

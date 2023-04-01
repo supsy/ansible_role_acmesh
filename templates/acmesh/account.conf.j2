@@ -4,6 +4,10 @@ ACCOUNT_EMAIL='{{ acmesh__account_email }}'
 
 USER_PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
+{% if acmesh__default_acme_server %}
+DEFAULT_ACME_SERVER='{{ acmesh__default_acme_server }}'
+{% endif %}
+
 #dns api
 #######################
 
